@@ -4,16 +4,16 @@ public class User {
     private String id;
     private String login;
     private String password;
-    private String active;
+    private String status;
 
     public User() {
     }
 
-    public User(String id, String login, String password, String active) {
+    public User(String id, String login, String password, String status) {
         this.id = id;
         this.login = login;
         this.password = password;
-        this.active = active;
+        this.status = status;
     }
 
     public String getId() {
@@ -40,11 +40,11 @@ public class User {
         this.password = password;
     }
 
-    public String isActive() {
-        return active;
+    public String getStatus() {
+        return status;
     }
 
-    public void setActive(String active) {
-        this.active = active;
+    public void setActive(String status) {
+        this.status = status;
     }
 }
