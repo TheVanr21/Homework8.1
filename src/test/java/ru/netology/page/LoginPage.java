@@ -13,17 +13,22 @@ public class LoginPage {
     private SelenideElement loginButton = $("[data-test-id=action-login]");
     private SelenideElement errorMessage = $("[data-test-id='error-notification'] .notification__content");
 
-    public VerificationPage validLogin(User user) {
-        loginField.setValue(user.getLogin());
-        passwordField.setValue(user.getPassword());
+    public VerificationPage login(User user, String wrongLogin, String wrongPassword) {
+        if (wrongLogin == null) {
+            loginField.setValue(user.getLogin());
+        } else {
+            loginField.setValue(wrongLogin);
+        }
+        if (wrongPassword == null) {
+            passwordField.setValue(user.getPassword());
+        } else {
+            passwordField.setValue(wrongPassword);
+        }
         loginButton.click();
+        if (wrongLogin != null || wrongPassword != null) {
+            errorMessage.shouldHave(Condition.text("Неверно указан логин или пароль")).shouldBe(Condition.visible);
+            return null;
+        }
         return new VerificationPage();
-    }
-
-    public void notValidLogin(String login, String password) {
-        loginField.setValue(login);
-        passwordField.setValue(password);
-        loginButton.click();
-        errorMessage.shouldHave(Condition.text("Неверно указан логин или пароль")).shouldBe(Condition.visible);
     }
 }

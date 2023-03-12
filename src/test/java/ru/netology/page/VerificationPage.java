@@ -15,22 +15,18 @@ public class VerificationPage {
         isOpen();
     }
 
-    public DashboardPage validVerify(String verificationCode) {
+    public DashboardPage verify(String verificationCode, boolean isWrong, boolean isFourth) {
         codeField.setValue(verificationCode);
         verifyButton.click();
+        if (isWrong && !isFourth) {
+            errorMessage.shouldHave(Condition.text("Неверно указан код! Попробуйте ещё раз.")).shouldBe(Condition.visible);
+            return null;
+        }
+        if (isWrong && isFourth) {
+            errorMessage.shouldHave(Condition.text("Превышено количество попыток ввода кода!")).shouldBe(Condition.visible);
+            return null;
+        }
         return new DashboardPage();
-    }
-
-    public void notValidVerify(String verificationCode) {
-        codeField.setValue(verificationCode);
-        verifyButton.click();
-        errorMessage.shouldHave(Condition.text("Неверно указан код! Попробуйте ещё раз.")).shouldBe(Condition.visible);
-    }
-
-    public void notValidVerifyFourth(String verificationCode) {
-        codeField.setValue(verificationCode);
-        verifyButton.click();
-        errorMessage.shouldHave(Condition.text("Превышено количество попыток ввода кода!")).shouldBe(Condition.visible);
     }
 
     public void isOpen() {
